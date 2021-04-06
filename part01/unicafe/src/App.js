@@ -10,24 +10,33 @@ const Button = ({ onClick, text }) => {
   )
 }
 
-const Result = ({ text, number }) => {
+const Statistic = ({ text, number }) => {
   return (
-  <div>
-    <p>{text}: {number}</p>
-  </div>
+    <td>{text}: {number}</td>
   )
 }
 
-const Statistics = ( { good, neutral, bad} ) => {
+const Statistics = ( { good, neutral, bad, all, positive, average} ) => {
+
+  if (!good && !bad && !neutral) {
+    return (
+      <div>
+        <p>No Feedbacks Given</p>
+      </div>
+    )
+  }
+
   return (
-    <div>
-      <Result text={'Good'} number={good} />
-      <Result text={'Neutral'} number={neutral} />
-      <Result text={'Bad'} number={bad} />
-      <Result text={'All'} number={good+bad+neutral} />
-      <Result text={'Average'} number={(good-bad)/(good+bad+neutral) ? (good-bad)/(good+bad+neutral) : 0} />
-      <Result text={'Positive'} number={((good)/(good+bad+neutral) * 100 ? (good)/(good+bad+neutral) * 100: 0) + '%'} />
-    </div>
+      <table>
+        <tbody>
+          <tr><Statistic text={'Good'} number={good} /></tr>
+          <tr><Statistic text={'Neutral'} number={neutral} /></tr>
+          <tr><Statistic text={'Bad'} number={bad} /></tr>
+          <tr><Statistic text={'All'} number={all} /></tr>
+          <tr><Statistic text={'Average'} number={average ? average : 0} /></tr>
+          <tr><Statistic text={'Positive'} number={(positive ? positive : 0) + '%'} /></tr>
+        </tbody>
+      </table>
   )
 }
 
@@ -39,6 +48,9 @@ const App = () => {
   const handleGoodClick = () => setGood(good + 1);
   const handleNeutralClick = () => setNeutral(neutral + 1);
   const handleBadClick = () => setBad(bad + 1);
+  let all = good + bad + neutral;
+  let average = (good-bad)/all;
+  let positive = (good)/all * 100;
 
 
   return (
@@ -48,9 +60,9 @@ const App = () => {
       <Button onClick={handleNeutralClick} text={'Neutral'} />
       <Button onClick={handleBadClick} text={'Bad'} />
       <Header title={'Statistics'} />
-      <Statistics good={good} bad={bad} neutral={neutral} />
+      <Statistics good={good} bad={bad} neutral={neutral} all={all} average={average} positive={positive} />
     </div>
   )
 }
 
-export default App
+export default App;
