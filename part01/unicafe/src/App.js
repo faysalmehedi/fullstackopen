@@ -18,6 +18,19 @@ const Result = ({ text, number }) => {
   )
 }
 
+const Statistics = ( { good, neutral, bad} ) => {
+  return (
+    <div>
+      <Result text={'Good'} number={good} />
+      <Result text={'Neutral'} number={neutral} />
+      <Result text={'Bad'} number={bad} />
+      <Result text={'All'} number={good+bad+neutral} />
+      <Result text={'Average'} number={(good-bad)/(good+bad+neutral) ? (good-bad)/(good+bad+neutral) : 0} />
+      <Result text={'Positive'} number={((good)/(good+bad+neutral) * 100 ? (good)/(good+bad+neutral) * 100: 0) + '%'} />
+    </div>
+  )
+}
+
 const App = () => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
@@ -35,12 +48,7 @@ const App = () => {
       <Button onClick={handleNeutralClick} text={'Neutral'} />
       <Button onClick={handleBadClick} text={'Bad'} />
       <Header title={'Statistics'} />
-      <Result text={'Good'} number={good} />
-      <Result text={'Neutral'} number={neutral} />
-      <Result text={'Bad'} number={bad} />
-      <Result text={'All'} number={good+bad+neutral} />
-      <Result text={'Average'} number={(good-bad)/(good+bad+neutral) ? (good-bad)/(good+bad+neutral) : 0} />
-      <Result text={'Positive'} number={((good)/(good+bad+neutral) * 100 ? (good)/(good+bad+neutral) * 100: 0) + '%'} />
+      <Statistics good={good} bad={bad} neutral={neutral} />
     </div>
   )
 }
