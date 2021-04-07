@@ -3,7 +3,7 @@ import React from 'react';
 const Header = ({ name }) => {
     return (
         <div>
-            <h1>{name}</h1>
+            <h2>{name}</h2>
         </div>
     )
 };
@@ -34,7 +34,7 @@ const Total = ({ parts }) => {
 
     return (
         <div>
-            <p>Total {total} of exercises.</p>
+            <h4>Total {total} of exercises.</h4>
         </div>
     )
 };
