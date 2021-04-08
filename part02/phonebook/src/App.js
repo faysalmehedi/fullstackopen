@@ -4,16 +4,26 @@ const App = () => {
   const [ persons, setPersons ] = useState([
     { name: 'Arto Hellas' }
   ]);
-  
+
   const [ newName, setNewName ] = useState('');
 
   const addPerson = (event) => {
     event.preventDefault();
-    const personObject = {
-      name: newName,
+    let matched = persons.find(person => person.name === newName);
+    if (!newName) {
+      alert('No Input Given');
+      
+    } else if (matched) {
+      alert(`${newName} is already on the phonebook.`)
+
+    } else {
+      const personObject = {
+        name: newName,
+      }
+
+      setPersons(persons.concat(personObject));
     }
 
-    setPersons(persons.concat(personObject));
     setNewName('');
   };
 
